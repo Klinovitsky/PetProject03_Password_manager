@@ -29,7 +29,16 @@ def get_config():
     """Import JSON, define variables."""
     # Method search for user’s home directory in password directory
     # On Windows platform, an initial ~ is replaced by the value of HOME and USERPROFILE
-    config = os.path.expanduser("~/.password.zip")
+    # Функция expanduser() модуля os.path возвращает аргумент с начальным компонентом
+    # пути '~' или '~user', замененным домашним каталогом этого пользователя.
+    directory = os.path.expanduser("~/.password.zip")
+
+    # Load from JSON
+    with open('settings.json', encoding='utf-8') as fh:  # Open the file for reading
+        data = json.load(fh)  # Load data from the file into the data dictionary
+    data['Path'] = '"' + directory + '"'
+    print("Data from JSON file:\n", data)
+    print('-------------------------------------------')
 
     # master_password = ''
 
@@ -43,7 +52,7 @@ def get_config():
     #     file.setpassword(pwd=bytes(second_password, 'utf-8'))
     #     file.extractall()
 
-    return config
+    return data
 
 
 def add():
@@ -128,9 +137,9 @@ def generate():
     return passwords_list, number
 
 
-def output(passwords_list, number, config):
+def output(passwords_list, number, options):
     """Final information about the program"""
-    print(f'Configuration: {config}')
+    print(f'Configuration: {options}')
     print(f'Your {number} password(s): {passwords_list}')
 
     # Workpiece 1.
@@ -156,10 +165,10 @@ def output(passwords_list, number, config):
 
 def main():
     """I can quickly comment out the function call from here"""
-    config = get_config()
+    options = get_config()
     add()
     passwords_list, number = generate()
-    output(passwords_list, number, config)
+    output(passwords_list, number, options)
 
     # Encrypt text test
     text = str(input('Enter the text for pass (no spaces please): ' + "\n"))   # Spaces and decrypt

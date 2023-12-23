@@ -1,0 +1,7 @@
+{
+  "cipher_shift": 4,
+  "password_length": 12,
+  "key_word": "action",
+  "zip_options": "a",
+  "test_password": "DjangoTest123"
+}
