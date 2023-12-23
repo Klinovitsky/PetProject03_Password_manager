@@ -1,12 +1,18 @@
+"""Pet-project 03. Password manager"""
 # ----------------------------------------------------------------------------------------------
-# Pet-project 03. Password manager
-#
 # ТЗ: Менеджер паролей с шифрованием и генератором паролей
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 # Press Ctrl+F8 to toggle the breakpoint.
 # (c) 2023 Vladimir Klinovitsky, Moscow, Russian Federation
 # e-mail: klinovitsky@gmail.com
+#
+# Functions:
+#     get_config(file) - > object
+#     settings(object, file) -> list
+#     generate(object) -> object
+# Misc variables:
+#     master_password
 # ----------------------------------------------------------------------------------------------
 
 import random
@@ -18,11 +24,12 @@ import zipfile
 
 
 def get_config():
+    """Import JSON, define variables."""
     # Method search for user’s home directory in password directory
     # On Windows platform, an initial ~ is replaced by the value of HOME and USERPROFILE
     config = os.path.expanduser("~/.password.zip")
 
-    master_password = ''
+    # master_password = ''
 
     # # Extracting zip with password
     # file_name = 'password.zip'
@@ -37,14 +44,8 @@ def get_config():
     return config
 
 
-def settings():
-    """Import JSON, define variables."""
-    pass
-
-
 def add():
     """Calculate the sum."""
-    pass
 
 
 def encrypt(master_password, second_password, data):
@@ -56,25 +57,37 @@ def decrypt(master_password, second_password, data):
 
 
 def generate():
-    """Generate password."""
-
+    """Generate passwords and return a list of passwords and their number"""
     chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    number = input('Enter the number of passwords: ')
-    length = input('Enter password length: ')
-    number = int(number)
-    length = int(length)
+    number = int(input('Enter the number of passwords: '))
 
-    for n in range(number):
+    if number == 0:     # I did not return to re-enter the value because this condition for fun
+        print('You have entered 0 passwords. Exit the program')
+        raise SystemExit
+
+    length = int(input('Enter password length: '))
+    passwords_list = []
+
+    for _ in range(number):     # To avoid unused variable warning in Pylint, replaced by (‘_’).
         password = ''
-        for i in range(length):
+        for _ in range(length):
             password += random.choice(chars)
 
-        print(password)
+            # Оператор += является комбинированным оператором присваивания и сложения.
+            # Он увеличивает значение переменной на указанное число (в данном случае на 1)
+            # и присваивает полученное значение обратно переменной.
+            # Инструкция i += 1 эквивалентна конструкции i = i + 1 (это просто сокращенная запись)
+        # print(password)
+        passwords_list.append(password)
+    return passwords_list, number
 
 
-def output(items):
+def output(passwords_list, number, config):
     """Final information about the program"""
-    print(f'Password(s) generated: {items}')
+    print(f'Configuration: {config}')
+    print(f'The number of passwords generated: {number}')
+    print(f'Password(s): {passwords_list}')
+
 
     # Workpiece 1.
     # colors = ['red', 'green', 'blue', 'yellow']
@@ -89,7 +102,8 @@ def output(items):
     #     d[word] += 1
 
     # Workpiece 3.
-    # Соединение 2 списков в 1 словарь. Очень быстрый метод, используется только один кортеж для генерации словаря.
+    # Соединение 2 списков в 1 словарь.
+    # Очень быстрый метод, используется только один кортеж для генерации словаря.
     # names = ['raymond', 'rachel', 'matthew']
     # colors = ['red', 'green', 'blue']
     #
@@ -97,11 +111,12 @@ def output(items):
 
 
 def main():
-    get_config()
+    """I can quickly comment out the function call from here"""
+    config = get_config()
     settings()
     add()
-    generate()
-    output('report_file.zip')
+    passwords_list, number = generate()
+    output(passwords_list, number, config)
 
 
 # Press the green button in the gutter to run the script.
