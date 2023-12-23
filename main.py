@@ -113,7 +113,6 @@ def output(passwords_list, number, config):
 def main():
     """I can quickly comment out the function call from here"""
     config = get_config()
-    settings()
     add()
     passwords_list, number = generate()
     output(passwords_list, number, config)
