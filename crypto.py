@@ -17,7 +17,7 @@ def encrypt_decrypt(text, decrypt_flag, shift):
     # message = 'GIEWIVrGMTLIVrHIQSRWXVEXMSR'.upper()
     message = text.upper()      # Upper case is used to avoid errors
     result = ''
-    lang = input('Choose language. Type "1" for Russian, "2" for English: ')
+    lang = input('Choose language.\n [1] Russian (debug)\n [2] English\n')
     if lang == '1':
         for i in message:
             place = ru_alphabet.find(i)
